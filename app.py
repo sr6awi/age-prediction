@@ -7,21 +7,21 @@ Original file is located at
     https://colab.research.google.com/drive/1JifJbGUFkM9WfymDHDbUezarDSzYxS3f
 """
 
-
-# Import the necessary libraries
+#Make sure u have the right access to the ngok token to be able to open a web server and rub it for you 
+# necessary libraries :
 import streamlit as st
 from keras.models import load_model
 import cv2
 import numpy as np
 
-# Mount Google Drive
+# mounting the  Google Drive :
 from google.colab import drive
 drive.mount('/content/drive')
 
-# Load the saved model
+# Load the saved model :
 model = load_model('/content/drive/MyDrive/trained_model.h5')
 
-# Function to preprocess and predict the age
+# function to preprocess and predict the age of my model:
 def predict_age(image):
     # Preprocess the image (resize, normalize, etc.)
     img = cv2.resize(image, (128, 128))
@@ -33,25 +33,25 @@ def predict_age(image):
 
     return int(age)
 
-# Create the Streamlit app
+# Create the Streamlit app :
 def main():
     st.title("Age Detection App")
 
-    # Upload the image
+    # Upload the image :
     uploaded_file = st.file_uploader("Choose an image", type=['jpg', 'png', 'jpeg'])
 
     if uploaded_file is not None:
-        # Read the image
+        # Read the image:
         image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), cv2.IMREAD_COLOR)
 
-        # Display the image
+        # Display the image:
         st.image(image, channels="BGR")
 
-        # Make the prediction
+        # Make the prediction:
         age = predict_age(image)
         st.write(f"Predicted age: {age} years")
 
-# Run the Streamlit app
+# Run the Streamlit app:
 if __name__ == "__main__":
     main()
 
